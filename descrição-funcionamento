@@ -1,0 +1,55 @@
+Este projeto implementa um jogo de memória estilo "Genius" utilizando um ESP8266 com botões, LEDs e um buzzer. O jogo também publica mensagens em um broker MQTT para notificar sobre o progresso do jogador. Abaixo está uma descrição de como o sistema funciona e instruções para quem deseja reproduzir o projeto.
+
+Descrição do Funcionamento
+
+1. Conexão WiFi e MQTT:
+    - O ESP8266 se conecta a uma rede WiFi usando as credenciais fornecidas.
+    - Uma vez conectado, ele tenta se conectar a um broker MQTT especificado.
+
+2. Configuração de Pinos:
+    - Pinos são configurados para os LEDs, botões e o buzzer.
+    - LEDs são usados para indicar a sequência e responder às interações do jogador.
+    - Botões são usados para que o jogador reproduza a sequência mostrada pelos LEDs.
+    - O buzzer é usado para fornecer feedback sonoro.
+
+3. Jogo:
+    - O jogo começa quando o botão correspondente a cor vermelha é pressionado e segurado.
+    - Uma sequência de LEDs é mostrada, aumentando de tamanho a cada rodada.
+    - O jogador deve reproduzir a sequência correta pressionando os botões correspondentes.
+    - Se o jogador acertar, a mensagem "Parabéns você acertou!" é publicada no tópico MQTT.
+    - Se o jogador errar ou demorar a responder, a mensagem "Você errou!" é publicada no tópico MQTT, e o jogo recomeça.
+
+Instruções para Reproduzir o Projeto
+
+1. Componentes Necessários:
+    - ESP8266 (por exemplo, NodeMCU)
+    - 4 LEDs (vermelho, verde, amarelo e azul)
+    - 4 botões
+    - 1 buzzer
+    - Resistores para os LEDs e botões
+    - Protoboard e jumpers para conexões
+
+2. Montagem do Circuito:
+    - Conecte cada LED a um pino digital do ESP8266 (D0 a D3) através de um resistor.
+    - Conecte cada botão a um pino digital do ESP8266 (D5 a D8) com resistores pull-down.
+    - Conecte o buzzer a um pino digital (D4).
+    - Certifique-se de que o ESP8266 está alimentado corretamente (via USB ou fonte externa adequada).
+
+3. Código:
+    - Copie o código fornecido para o Arduino IDE.
+    - Atualize as credenciais WiFi (`ssid` e `password`) e os detalhes do broker MQTT (`mqttServer`, `mqttPort` e `mqttClientName`).
+    - Carregue o código no ESP8266.
+
+4. Execução:
+    - Após o upload, abra o monitor serial para ver os logs de conexão WiFi e MQTT.
+    - Pressione qualquer botão para iniciar o jogo.
+    - Siga a sequência de LEDs e pressione os botões correspondentes.
+    - Monitore o tópico MQTT especificado (`projetoPedro/Genius`) para mensagens de progresso.
+
+Notas Adicionais
+
+- Certifique-se de que a rede WiFi e o broker MQTT estão funcionando corretamente.
+- Ajuste os tempos e frequências no código conforme necessário para melhor experiência de jogo.
+- Este projeto pode ser expandido para incluir mais funcionalidades, como diferentes níveis de dificuldade ou uma interface web para monitorar o progresso.
+
+Com essas informações, qualquer pessoa com conhecimentos básicos de eletrônica e programação de microcontroladores deve conseguir reproduzir e entender o funcionamento do jogo "Genius" utilizando o ESP8266.
