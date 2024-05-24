@@ -1,0 +1,142 @@
+Documentação das Interfaces, Protocolos e Módulos de Comunicação
+
+Este projeto utiliza várias interfaces e protocolos de comunicação para implementar um jogo de memória estilo "Genius" com ESP8266. Abaixo estão as descrições detalhadas dessas interfaces, protocolos e módulos de comunicação.
+
+Interfaces
+
+1. Pinos GPIO
+
+Os pinos GPIO do ESP8266 são utilizados para conectar os LEDs, botões e buzzer. A tabela abaixo descreve as conexões:
+
+| Pino ESP8266 | Componente       | Função                   |
+|--------------|------------------|--------------------------|
+| D0           | LED Vermelho     | Saída para LED vermelho  |
+| D1           | LED Verde        | Saída para LED verde     |
+| D2           | LED Amarelo      | Saída para LED amarelo   |
+| D3           | LED Azul         | Saída para LED azul      |
+| D4           | Buzzer           | Saída para buzzer        |
+| D5           | Botão Vermelho   | Entrada para botão 1     |
+| D6           | Botão Verde      | Entrada para botão 2     |
+| D7           | Botão Amarelo    | Entrada para botão 3     |
+| D8           | Botão Azul       | Entrada para botão 4     |
+
+2. Monitor Serial
+
+A interface serial é utilizada para depuração e monitoramento do estado do ESP8266. A comunicação serial é configurada na velocidade de 9600 bps.
+
+Protocolos
+
+1. WiFi (IEEE 802.11)
+
+O ESP8266 utiliza a interface WiFi para se conectar a uma rede sem fio e acessar a internet. As funções principais para gerenciar a conexão WiFi são:
+
+- `WiFi.begin(ssid, password)`: Conecta à rede WiFi especificada pelo SSID e senha.
+- `WiFi.status()`: Verifica o status da conexão WiFi.
+- `WiFi.localIP()`: Obtém o endereço IP atribuído ao ESP8266 pela rede WiFi.
+
+2. MQTT (Message Queuing Telemetry Transport)
+
+MQTT é um protocolo de comunicação leve para IoT. No projeto, o ESP8266 atua como cliente MQTT para publicar mensagens sobre o progresso do jogo. As funções principais para gerenciar a conexão MQTT são:
+
+- `client.setServer(mqttServer, mqttPort)`: Configura o servidor MQTT (broker) e a porta.
+- `client.connect(mqttClientName)`: Conecta ao broker MQTT com um nome de cliente especificado.
+- `client.connected()`: Verifica se o cliente está conectado ao broker.
+- `client.publish(topic, message)`: Publica uma mensagem no tópico especificado.
+
+Módulos de Comunicação
+
+1. ESP8266WiFi
+
+A biblioteca `ESP8266WiFi` é utilizada para gerenciar a conectividade WiFi no ESP8266. Principais funções e métodos utilizados:
+
+- `WiFi.begin(ssid, password)`: Inicializa a conexão WiFi.
+- `WiFi.status()`: Retorna o status atual da conexão WiFi.
+- `WiFi.localIP()`: Retorna o endereço IP do ESP8266.
+
+
+#include <ESP8266WiFi.h>
+
+// Configuração WiFi
+const char* ssid = "McCoyisKing_2.4GHz";
+const char* password = "euabraceioJoey";
+
+void setupWiFi() {
+    delay(10);
+    Serial.println();
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+    Serial.println("");
+    Serial.println("WiFi connected");
+    Serial.println("IP address: ");
+    Serial.println(WiFi.localIP());
+}
+
+
+2. PubSubClient
+
+A biblioteca `PubSubClient` é utilizada para gerenciar a comunicação MQTT. Principais funções e métodos utilizados:
+
+- `client.setServer(mqttServer, mqttPort)`: Configura o servidor MQTT e a porta.
+- `client.connect(mqttClientName)`: Conecta ao broker MQTT com um nome de cliente.
+- `client.publish(topic, message)`: Publica uma mensagem no tópico especificado.
+- `client.loop()`: Mantém a conexão MQTT ativa e processa mensagens recebidas.
+
+#include <PubSubClient.h>
+
+// Configuração MQTT
+const char* mqttServer = "91.121.93.94";
+const int mqttPort = 1883;
+const char* mqttClientName = "test.mosquitto.org";
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+void setupMQTT() {
+    client.setServer(mqttServer, mqttPort);
+}
+
+void reconnect() {
+    while (!client.connected()) {
+        Serial.print("Attempting MQTT connection...");
+        if (client.connect(mqttClientName)) {
+            Serial.println("connected");
+        } else {
+            Serial.print("failed, rc=");
+            Serial.print(client.state());
+            Serial.println(" try again in 5 seconds");
+            delay(5000);
+        }
+    }
+}
+
+void loop() {
+    if (!client.connected()) {
+        reconnect();
+    }
+    client.loop();
+    // Publicação de mensagens de progresso
+    if(client.connected()) {
+        client.publish("projetoPedro/Genius", "Parabéns você acertou!");
+    }
+}
+
+
+Fluxo de Operação
+
+1. Configuração Inicial:
+    - Conexão à rede WiFi usando `setupWiFi()`.
+    - Configuração do cliente MQTT usando `setupMQTT()`.
+
+2. Loop Principal:
+    - Verificação da conexão MQTT e reconexão se necessário.
+    - Publicação de mensagens de progresso no broker MQTT.
+    - Gerenciamento da lógica do jogo, incluindo a leitura de entradas dos botões e atualização dos LEDs e buzzer.
+
+Considerações Finais
+
+Este projeto demonstra a integração de um microcontrolador ESP8266 com redes WiFi e o protocolo MQTT para criar um jogo interativo. A documentação das interfaces, protocolos e módulos de comunicação é essencial para entender e reproduzir o projeto de forma eficaz.
