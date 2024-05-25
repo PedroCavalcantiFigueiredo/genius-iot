@@ -1,0 +1,31 @@
+Descrição dos Hardwares Utilizados no Projeto
+O projeto descrito no artigo utiliza diversos componentes eletrônicos, cada um desempenhando um papel específico no funcionamento do sistema. A seguir, é apresentada uma descrição detalhada dos hardwares utilizados:
+
+Protoboards
+A protoboard é uma placa utilizada para montar circuitos eletrônicos de forma temporária, sem a necessidade de soldagem. Possui uma matriz de furos conectados internamente por trilhas condutoras, permitindo a inserção e conexão rápida de componentes eletrônicos. É essencial para a prototipagem rápida e testes de circuitos.
+
+Resistores (220Ω e 1kΩ)
+Os resistores são componentes que limitam a quantidade de corrente elétrica que passa por um circuito. No projeto, são utilizados resistores de 220Ω e 1kΩ. O resistor de 220Ω é usado para limitar a corrente nos LEDs, enquanto o resistor de 1kΩ pode ser usado para diversas funções, incluindo a criação de divisores de tensão e a limitação de corrente em outros componentes.
+
+LEDs (Vermelho, Verde, Amarelo e Azul)
+Os LEDs (Light Emitting Diodes) são diodos emissores de luz que acendem quando uma corrente elétrica passa por eles. No projeto, são utilizados LEDs nas cores vermelho, verde, amarelo e azul. Eles são usados como indicadores visuais que respondem a diferentes condições no sistema.
+
+Fios
+Fios de conexão, também conhecidos como jumpers, são utilizados para estabelecer conexões elétricas entre os componentes na protoboard e o NodeMCU. Eles são essenciais para a construção do circuito e permitem a flexibilidade de modificações rápidas.
+
+NodeMCU
+O NodeMCU é uma plataforma de desenvolvimento baseada no microcontrolador ESP8266, que possui capacidades de conectividade Wi-Fi. Ele é usado para criar projetos de Internet das Coisas (IoT) devido à sua facilidade de uso e baixo custo. No projeto, o NodeMCU pode ser utilizado para comunicação e controle remoto do sistema.
+
+Buzzer
+O buzzer é um dispositivo que gera sons audíveis quando uma tensão elétrica é aplicada. Existem buzzers piezoelétricos e eletromecânicos, e ambos podem ser usados para fornecer feedback sonoro em resposta a eventos específicos no sistema.
+
+Botão
+O botão é um componente simples que permite ao usuário interagir com o sistema, fornecendo entradas de controle. Pode ser um botão de pressão simples, que fecha um circuito quando pressionado, ou outros tipos, dependendo da aplicação.
+
+Esquema de Conexão
+Os componentes são conectados em uma protoboard com fios, resistores e LEDs posicionados de acordo com o design do circuito. O NodeMCU é usado para controlar o funcionamento dos LEDs, do buzzer e das funcionalidades de comunicação Wi-Fi.
+
+Funcionalidade Geral
+O sistema criado com esses componentes visa proporcionar uma interface interativa onde os LEDs acendem em sequências controladas pelo NodeMCU, e o usuário interage com o sistema pressionando botões. O buzzer fornece feedback sonoro, indicando sucessos ou falhas nas interações do usuário.
+
+Esses hardwares combinados permitem a criação de um projeto interativo que pode ser utilizado para fins educacionais, lúdicos ou em demonstrações de conceitos básicos de eletrônica e programação de microcontroladores.
